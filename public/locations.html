@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <title>Adding Kendo to a Web Page</title>
+
+        <link href="stylesheets/kendo.common.min.css"
+        rel="stylesheet" type="text/css" />
+        <link href="stylesheets/kendo.default.min.css"
+        rel="stylesheet" type="text/css" />
+        <script src="javascripts/jquery.min.js" type="text/javascript"></script>
+        <script src="javascripts/kendo.web.min.js" type="text/javascript"></script>
+    </head>
+    
+    <body>
+        <div id="searchResults"></div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var locationSearch = new kendo.data.DataSource({
+                    transport: {
+                        read: {
+                            url: "/locations.json",
+                            dataType: "json"
+                            //                            data: {
+                            //                                q: "#salesforce"
+                            //                            }
+                        },
+                    },
+                    pageSize: 10,
+                    schema: {
+                        data: "locations",
+                        //                        total: "results_per_page"
+                    },
+
+                });
+
+                $("#searchResults").kendoGrid({
+                    dataSource: locationSearch,
+                    columns: [{
+                        field: "location_name",
+                        title: "Name",
+                        //                        template: '#= kendo.toString(new Date(created_at), "MM/dd/yyyy hh:mm") #',
+                        width: 200,
+                    }, {
+                        field: "address_1",
+                        title: "Address",
+                                        width:300,
+                    }, {
+                        field: "city",
+                        title: "City",
+                    }, {
+                        field: "state",
+                        title: "State",
+                    }, {
+                        field: "postal_code",
+                        title: "Zip",
+                    }, {
+                        field: "phone",
+                        title: "Phone",
+                    }],
+                    scrolling: false,
+                    pageable: true,
+                    sortable: true,
+                    groupable: true,
+                    filterable: true,
+                    selectable: "row"
+                });
+            });
+        </script>
+    </body>
+
+</html>
